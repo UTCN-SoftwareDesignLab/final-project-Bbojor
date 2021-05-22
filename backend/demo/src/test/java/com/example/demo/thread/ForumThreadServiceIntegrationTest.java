@@ -59,12 +59,28 @@ public class ForumThreadServiceIntegrationTest {
 
         forumThreadRepository.saveAll(forumThreads);
 
+        List<ForumThread> gameThreads = TestCreationFactory.listOf(ForumThread.class);
+
+        gameThreads.forEach( thread ->
+                thread.setTitle("something bideo gane something"));
+        gameThreads.forEach( thread ->
+                thread.setBoard(board2));
+
         ForumThreadFilterRequestDTO filter = ForumThreadFilterRequestDTO.builder()
                 .boardId(board1.getId())
                 .build();
 
+        forumThreadRepository.saveAll(gameThreads);
+
         List<ForumThreadDTO> all = forumThreadService.findAllFiltered(filter);
         assertEquals(forumThreads.size(), all.size());
+
+        ForumThreadFilterRequestDTO titleFilter = ForumThreadFilterRequestDTO.builder()
+                .title("bideo gane")
+                .build();
+
+        all = forumThreadService.findAllFiltered(titleFilter);
+        assertEquals(gameThreads.size(), all.size());
     }
 
     @Test

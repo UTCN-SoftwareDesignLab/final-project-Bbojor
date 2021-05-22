@@ -1,10 +1,13 @@
 package com.example.demo.user;
 
 import com.example.demo.TestCreationFactory;
+import com.example.demo.media.MediaRepository;
+import com.example.demo.media.model.Media;
 import com.example.demo.user.dto.UserDTO;
 import com.example.demo.user.model.ERole;
 import com.example.demo.user.model.Role;
 import com.example.demo.user.model.User;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,9 @@ class UserServiceIntegrationTest {
     private UserRepository userRepository;
 
     @Autowired
+    private MediaRepository mediaRepository;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -34,13 +40,25 @@ class UserServiceIntegrationTest {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private static Media avatar;
+
+    @BeforeAll
+    static void setMedia() {
+        avatar = TestCreationFactory.newMedia();
+    }
+
     @BeforeEach
-    void setUp() { userRepository.deleteAll();}
+    void setUp() {
+        userRepository.deleteAll();
+        mediaRepository.deleteAll();
+        avatar = mediaRepository.save(avatar);
+    }
 
     @Test
     void findAll() {
 
         List<User> users = TestCreationFactory.listOf(User.class);
+        users.forEach(u -> u.setAvatar(avatar));
 
         userRepository.saveAll(users);
 
@@ -52,6 +70,8 @@ class UserServiceIntegrationTest {
     @Test
     void findAllByRole() {
         List<User> users = TestCreationFactory.listOf(User.class);
+        users.forEach(u -> u.setAvatar(avatar));
+
         HashSet<Role> doctorRole = new HashSet<>();
         Optional<Role> mod = roleRepository.findByName(ERole.MODERATOR);
         doctorRole.add(mod.get());
@@ -71,6 +91,7 @@ class UserServiceIntegrationTest {
     @Test
     void getUser() {
         User user = TestCreationFactory.newUser();
+        user.setAvatar(avatar);
         user = userRepository.save(user);
 
         UserDTO foundUser = userService.getUser(user.getId());
@@ -83,9 +104,11 @@ class UserServiceIntegrationTest {
     @Test
     public void edit() {
         User user = TestCreationFactory.newUser();
+        user.setAvatar(avatar);
         user = userRepository.save(user);
 
         UserDTO newUser = TestCreationFactory.newUserDTO();
+        newUser.setAvatarId(avatar.getId());
         userService.edit(user.getId(), newUser);
 
         List<UserDTO> allUsers = userService.findAll();
@@ -98,6 +121,7 @@ class UserServiceIntegrationTest {
     @Test
     public void delete() {
         List<User> users = TestCreationFactory.listOf(User.class);
+        users.forEach(u -> u.setAvatar(avatar));
         int originalSize = users.size();
         userRepository.saveAll(users);
 
@@ -114,6 +138,7 @@ class UserServiceIntegrationTest {
     public void changePassword() {
         User user = TestCreationFactory.newUser();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setAvatar(avatar);
         user = userRepository.save(user);
 
         String newPassword = TestCreationFactory.randomString();

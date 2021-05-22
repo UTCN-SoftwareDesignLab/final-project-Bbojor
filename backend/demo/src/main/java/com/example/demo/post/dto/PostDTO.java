@@ -28,7 +28,7 @@ public class PostDTO {
     @NotNull(message = "Post must have a user")
     private Long userId;
 
-    private String userName;
+    private String username;
 
     private String userAvatar;
 

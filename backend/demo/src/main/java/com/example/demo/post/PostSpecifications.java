@@ -7,7 +7,7 @@ import org.springframework.data.jpa.domain.Specification;
 public class PostSpecifications {
 
     public static Specification<Post> threadId(Long threadId) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("forumthread").get("id"), threadId);
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("forumThread").get("id"), threadId);
     }
 
     public static Specification<Post> userId(Long userId) {

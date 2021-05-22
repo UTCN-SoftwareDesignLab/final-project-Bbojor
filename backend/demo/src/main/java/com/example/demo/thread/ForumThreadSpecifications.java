@@ -11,7 +11,7 @@ public class ForumThreadSpecifications {
     }
 
     public static Specification<ForumThread> title(String title) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("title"), title);
+        return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("title"), "%" + title + "%");
     }
 
     public static Specification<ForumThread> specificationFromFilter(ForumThreadFilterRequestDTO filter) {

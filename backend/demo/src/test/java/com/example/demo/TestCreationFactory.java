@@ -85,6 +85,7 @@ public class TestCreationFactory {
                 .username(randomString())
                 .email(randomEmail())
                 .password(randomString())
+                .avatar(newMedia())
                 .build();
     }
 
@@ -93,6 +94,7 @@ public class TestCreationFactory {
                 .id(randomLong())
                 .username(randomString())
                 .email(randomEmail())
+                .avatarId(randomLong())
                 .build();
     }
 
@@ -117,6 +119,7 @@ public class TestCreationFactory {
                 .text(randomString())
                 .date(new Date())
                 .user(newUser())
+                .forumThread(newForumThread())
                 .build();
     }
 
@@ -126,6 +129,7 @@ public class TestCreationFactory {
                 .text(randomString())
                 .date(new Date())
                 .userId(randomLong())
+                .threadId(randomLong())
                 .build();
     }
 

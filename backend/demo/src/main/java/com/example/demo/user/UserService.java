@@ -62,9 +62,9 @@ public class UserService {
             });
         }
 
-        if(user.getAvatar() == null) {
+        if(user.getAvatarId() == null) {
             Media defaultAvatar = mediaRepository.findByFileName(DEFAULT_AVATAR);
-            user.setAvatar(defaultAvatar);
+            user.setAvatarId(defaultAvatar.getId());
         }
 
         actualUser.setRoles(roles);

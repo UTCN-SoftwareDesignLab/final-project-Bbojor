@@ -24,7 +24,9 @@ public class UserDTO {
     @Email(message = "Not a valid email")
     private String email;
 
-    private Media avatar;
+    private String avatarFile;
+
+    private Long avatarId;
 
     @Builder.Default
     private Set<String> roles = new HashSet<>();

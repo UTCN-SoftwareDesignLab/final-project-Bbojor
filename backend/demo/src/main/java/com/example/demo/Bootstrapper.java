@@ -1,6 +1,8 @@
 package com.example.demo;
 
 
+import com.example.demo.media.MediaRepository;
+import com.example.demo.media.model.Media;
 import com.example.demo.security.AuthService;
 import com.example.demo.security.dto.SignupRequest;
 import com.example.demo.user.RoleRepository;
@@ -22,6 +24,7 @@ public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> 
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
     private final AuthService authService;
+    private final MediaRepository mediaRepository;
 
     @Value("${app.bootstrapRoles}")
     private Boolean bootstrapRoles;
@@ -43,6 +46,13 @@ public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> 
         }
 
         if(bootstrapUsers) {
+            userRepository.deleteAll();
+            mediaRepository.deleteAll();
+
+            mediaRepository.save(Media.builder().
+                    fileName("default.png")
+                    .build());
+
             authService.register(SignupRequest.builder()
                     .email("barbu@email.com")
                     .username("bb")
@@ -51,15 +61,15 @@ public class Bootstrapper implements ApplicationListener<ApplicationReadyEvent> 
                     .build());
 
             authService.register(SignupRequest.builder()
-                    .email("secretary@email.com")
-                    .username("secretary")
+                    .email("user@email.com")
+                    .username("user")
                     .password("Pass123")
                     .roles(Set.of("USER"))
                     .build());
 
             authService.register(SignupRequest.builder()
-                    .email("doctor@email.com")
-                    .username("doctor")
+                    .email("mod@email.com")
+                    .username("mod")
                     .password("Pass123")
                     .roles(Set.of("MODERATOR"))
                     .build());

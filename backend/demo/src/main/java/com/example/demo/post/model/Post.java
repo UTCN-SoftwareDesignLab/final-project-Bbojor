@@ -33,7 +33,7 @@ public class Post {
     @ManyToOne(optional = false)
     private User user;
 
-    @JoinColumn(name = "forumthread_id", updatable = false)
+    @JoinColumn(name = "forum_thread_id", updatable = false)
     @ManyToOne(optional = false)
     private ForumThread forumThread;
 
@@ -41,8 +41,7 @@ public class Post {
     private Date date;
 
     @Column
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "media_id")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "post")
     @Builder.Default
     private Set<Media> media = new HashSet<>();
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import java.io.IOException;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -43,8 +44,10 @@ public class GlobalRequestExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public String handleValidationExceptions(HttpMessageNotReadableException ex) {
+    @ExceptionHandler({HttpMessageNotReadableException.class, IllegalStateException.class, MissingServletRequestPartException.class})
+    public String handleValidationExceptions(Exception ex) {
         return "Invalid fields in input";
     }
+
+
 }

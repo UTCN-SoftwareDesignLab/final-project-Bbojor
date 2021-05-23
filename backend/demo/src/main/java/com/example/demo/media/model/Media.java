@@ -1,6 +1,6 @@
 package com.example.demo.media.model;
 
-
+import com.example.demo.post.model.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,4 +24,9 @@ public class Media {
 
     @Column(nullable = false)
     private String fileName;
+
+    @JoinColumn(name = "post_id")
+    @ManyToOne
+    private Post post;
+
 }

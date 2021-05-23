@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.MockitoAnnotations;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultActions;
@@ -44,6 +45,11 @@ public abstract class BaseControllerTest {
         return mockMvc.perform(jsonType(put(path, pathVariable)
                 .content(asJsonString(body)))
         );
+    }
+
+    protected ResultActions performPostWithMultipartFile(String path,  MockMultipartFile file) throws Exception {
+        MockHttpServletRequestBuilder requestBuilder = multipart(path).file(file);
+        return mockMvc.perform(requestBuilder);
     }
 
     protected ResultActions performDeleteWIthPathVariable(String path, Object pathVariable) throws Exception {

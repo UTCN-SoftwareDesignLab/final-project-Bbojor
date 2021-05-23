@@ -36,7 +36,7 @@ public class User {
     @Column (nullable = false,length = 120 )
     private String password;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "media_id")
     private Media avatar;
 

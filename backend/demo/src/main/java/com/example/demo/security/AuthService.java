@@ -57,10 +57,8 @@ public class AuthService {
             });
         }
 
-        if(user.getAvatar() == null) {
-            Media defaultAvatar = mediaRepository.findByFileName(DEFAULT_AVATAR);
-            user.setAvatar(defaultAvatar);
-        }
+        Media defaultAvatar = mediaRepository.findByFileName(DEFAULT_AVATAR);
+        user.setAvatar(defaultAvatar);
 
         user.setRoles(roles);
         userRepository.save(user);

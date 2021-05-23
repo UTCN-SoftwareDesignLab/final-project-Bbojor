@@ -1,6 +1,5 @@
 package com.example.demo.thread;
 
-import com.example.demo.post.dto.PostFilterRequestDTO;
 import com.example.demo.thread.dto.ForumThreadDTO;
 import com.example.demo.thread.dto.ForumThreadFilterRequestDTO;
 import com.example.demo.thread.mapper.ForumThreadMapper;

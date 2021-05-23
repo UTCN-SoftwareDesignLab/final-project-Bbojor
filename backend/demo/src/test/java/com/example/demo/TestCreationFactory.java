@@ -10,6 +10,8 @@ import com.example.demo.thread.dto.ForumThreadDTO;
 import com.example.demo.thread.model.ForumThread;
 import com.example.demo.user.dto.UserDTO;
 import com.example.demo.user.model.User;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -52,6 +54,8 @@ public class TestCreationFactory {
             supplier = TestCreationFactory::newForumThreadDTO;
         } else if (cls.equals(ForumThread.class)) {
                 supplier = TestCreationFactory::newForumThread;
+        } else if (cls.equals(MultipartFile.class)) {
+            supplier = TestCreationFactory::newMultipartFile;
         } else {
             supplier = () -> new String("Somethin' went wrong.");
         }
@@ -62,6 +66,13 @@ public class TestCreationFactory {
         ).collect(Collectors.toSet()) // remove duplicates in case of Long for example
                 .stream().collect(toList());
     }
+
+    public static MultipartFile newMultipartFile() {
+
+        String filename = randomString() + ".png";
+        return new MockMultipartFile( "file", filename, "image", "test_image".getBytes());
+    }
+
 
     public static Board newBoard() {
         return Board.builder()

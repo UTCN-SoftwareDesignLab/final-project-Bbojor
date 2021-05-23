@@ -14,4 +14,6 @@ public class MediaDTO {
     private Long id;
 
     private String fileName;
+
+    private Long postId;
 }

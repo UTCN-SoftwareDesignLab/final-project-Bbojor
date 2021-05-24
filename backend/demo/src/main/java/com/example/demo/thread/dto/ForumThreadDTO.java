@@ -1,6 +1,6 @@
 package com.example.demo.thread.dto;
 
-import com.example.demo.board.model.Board;
+import com.example.demo.media.model.Media;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -22,4 +24,13 @@ public class ForumThreadDTO {
 
     @NotNull(message = "Thread must have a board")
     private Long boardId;
+
+    @NotNull(message = "Thread must have a user posting it")
+    private Long userId;
+
+    @NotNull(message = "Thread starter must contain some text")
+    private String text;
+
+    @Builder.Default
+    private Set<Media> media = new HashSet<>();
 }

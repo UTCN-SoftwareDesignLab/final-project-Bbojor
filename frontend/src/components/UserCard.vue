@@ -9,7 +9,7 @@
       </v-list-item-content>
 
       <v-list-item-avatar tile size="80">
-        <v-img :src="avatar" />
+        <v-img :src="avatar()" />
       </v-list-item-avatar>
     </v-list-item>
 
@@ -33,13 +33,14 @@ export default {
     viewProfile() {
       router.push("/profile");
     },
+    avatar() {
+      //console.log(this.$store.getters["auth/avatar"]);
+      return require("@/../../media/" + this.$store.getters["auth/avatar"]);
+    },
   },
   computed: {
     username() {
       return this.$store.getters["auth/username"];
-    },
-    avatar() {
-      return require("@/../../media/" + this.$store.getters["auth/avatar"]);
     },
     userId() {
       return this.$store.getters["auth/userId"];

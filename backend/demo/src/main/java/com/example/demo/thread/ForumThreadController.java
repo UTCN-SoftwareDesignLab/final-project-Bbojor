@@ -24,9 +24,7 @@ public class ForumThreadController {
     }
 
     @PostMapping
-    public ForumThreadDTO create(@Valid @RequestBody ForumThreadDTO forumThreadDTO) {
-        System.out.println("sth");
-        return forumThreadService.create(forumThreadDTO); }
+    public ForumThreadDTO create(@Valid @RequestBody ForumThreadDTO forumThreadDTO) { return forumThreadService.create(forumThreadDTO); }
 
     @GetMapping(ENTITY)
     public ForumThreadDTO getForumThread(@PathVariable Long id) { return forumThreadService.getForumThread(id);}

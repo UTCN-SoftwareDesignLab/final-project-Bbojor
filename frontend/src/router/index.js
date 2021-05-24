@@ -5,8 +5,7 @@ import { auth as store } from "../store/auth.module";
 import Login from "../views/Login";
 import Home from "../views/Home";
 import ProfileView from "@/views/ProfileView";
-import PatientList from "@/views/PatientList";
-import ConsultationList from "@/views/ConsultationList";
+import BoardView from "@/views/BoardView";
 
 Vue.use(VueRouter);
 
@@ -29,30 +28,6 @@ const routes = [
     },
   },
   {
-    path: "/patients",
-    name: "Patients",
-    component: PatientList,
-    beforeEnter: (to, from, next) => {
-      if (store.state.status.loggedIn) {
-        next();
-      } else {
-        next({ name: "Login" });
-      }
-    },
-  },
-  {
-    path: "/consultations",
-    name: "Consultations",
-    component: ConsultationList,
-    beforeEnter: (to, from, next) => {
-      if (store.state.status.loggedIn) {
-        next();
-      } else {
-        next({ name: "Login" });
-      }
-    },
-  },
-  {
     path: "/home",
     name: "Home",
     component: Home,
@@ -68,6 +43,18 @@ const routes = [
     path: "/profile",
     name: "Profile",
     component: ProfileView,
+    beforeEnter: (to, from, next) => {
+      if (store.state.status.loggedIn) {
+        next();
+      } else {
+        next({ name: "Login" });
+      }
+    },
+  },
+  {
+    path: "/threads",
+    name: "Threads",
+    component: BoardView,
     beforeEnter: (to, from, next) => {
       if (store.state.status.loggedIn) {
         next();

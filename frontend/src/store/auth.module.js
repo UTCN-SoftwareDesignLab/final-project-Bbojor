@@ -37,18 +37,25 @@ export const auth = {
         }
       );
     },
+    editUser({ commit }, user) {
+      console.log(user);
+      api.users.edit({
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        avatarId: user.avatarId,
+      });
+      commit("editUser", { email: user.email, avatar: user.avatarFile });
+    },
   },
   mutations: {
     loginSuccess(state, user) {
       state.status.loggedIn = true;
       state.user = user;
     },
-    editedUserEmail(state, email) {
-      state.user.email = email;
-    },
-    editedUserAvatar(state, avatar) {
-      console.log(avatar);
-      state.user.avatar = avatar;
+    editUser(state, data) {
+      state.user.email = data.email;
+      state.user.avatar = data.avatar;
     },
     loginFailure(state) {
       state.status.loggedIn = false;

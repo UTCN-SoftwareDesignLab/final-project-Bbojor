@@ -67,6 +67,8 @@ public class UserService {
             user.setAvatarId(defaultAvatar.getId());
         }
 
+        actualUser.setAvatar(Media.builder().id(user.getAvatarId()).build());
+
         actualUser.setRoles(roles);
 
         return userMapper.toDto(userRepository.save(actualUser));

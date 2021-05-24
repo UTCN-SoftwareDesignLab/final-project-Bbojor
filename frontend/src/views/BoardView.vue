@@ -1,50 +1,50 @@
 <template>
   <v-card>
     <v-card-title>
-      Boards
+      {{ this.board.name }}
       <v-spacer></v-spacer>
-      <v-btn v-if="isAdmin" @click="addBoard">Add Board</v-btn>
+      <v-btn @click="createThread">Add Thread</v-btn>
     </v-card-title>
-    <BoardCard
-      v-for="board in boards"
-      v-bind:board="board"
-      v-bind:key="board.id"
+    <ThreadCard
+      v-for="thread in threads"
+      v-bind:thread="thread"
+      v-bind:key="thread.id"
       @refresh="refreshList"
-    ></BoardCard>
-    <BoardDialog
+    ></ThreadCard>
+    <ThreadDialog
       :opened="dialogVisible"
-      :board="selectedBoard"
+      :boardId="board.id"
       @refresh="refreshList"
       @close-dialog="closeDialog"
-    ></BoardDialog>
+    ></ThreadDialog>
   </v-card>
 </template>
 
 <script>
 // @ is an alias to /src
 
-import BoardDialog from "@/components/BoardDialog";
-import BoardCard from "@/components/BoardCard";
+import ThreadDialog from "@/components/ThreadDialog";
+import ThreadCard from "@/components/ThreadCard";
 import api from "@/api";
 
 export default {
-  name: "Home",
-  components: { BoardDialog, BoardCard },
+  name: "Threads",
+  components: { ThreadDialog, ThreadCard },
   data() {
     return {
-      boards: [],
+      board: {},
+      threads: [],
+      search: "",
       dialogVisible: false,
-      selectedBoard: {},
     };
   },
   methods: {
-    addBoard() {
-      this.selectedBoard = {};
+    createThread() {
       this.dialogVisible = true;
     },
     async refreshList() {
       this.dialogVisible = false;
-      this.selectedBoard = {};
+      this.selectedThread = {};
       this.boards = await api.boards.allBoards();
     },
     closeDialog() {
@@ -53,12 +53,13 @@ export default {
     },
   },
   computed: {
-    isAdmin() {
+    isModerator() {
       return this.$store.getters["auth/isAdmin"];
     },
   },
   async created() {
-    this.boards = await api.boards.allBoards();
+    this.board = this.$route.params.board;
+    this.threads = await api.threads.allThreadsFiltered("boardId=" + this.board.id);
   },
 };
 </script>

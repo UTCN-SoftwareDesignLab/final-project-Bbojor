@@ -1,6 +1,7 @@
 <template>
   <v-card class="ma-1" color="grey lighten-4" flat tile>
     <v-toolbar height="200">
+      <v-btn @click="toHome">Home</v-btn>
       <v-spacer></v-spacer>
       <UserCard></UserCard>
     </v-toolbar>
@@ -17,12 +18,8 @@ export default {
   name: "TopBar",
   components: { UserCard },
   methods: {
-    switchRoute() {
-      console.log(router.currentRoute.name);
-      if (router.currentRoute.name === "Consultations")
-        router.push("/patients");
-      else router.push("/consultations");
-      this.$forceUpdate();
+    toHome() {
+      router.push("/home");
     },
   },
   computed: {

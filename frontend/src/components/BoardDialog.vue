@@ -46,7 +46,6 @@ export default {
           })
           .then(() => {
             this.$emit("refresh");
-            this.scheduled();
           })
           .catch((error) => {
             alert(error.response.data);

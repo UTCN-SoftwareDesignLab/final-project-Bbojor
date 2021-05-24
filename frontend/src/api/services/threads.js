@@ -1,22 +1,29 @@
 import authHeader, { BASE_URL, HTTP } from "../http";
 
 export default {
-  allBoards() {
-    return HTTP.get(BASE_URL + "/threads", {
+  allThreadsFiltered(search) {
+    return HTTP.get(BASE_URL + "/threads/filtered?" + search, {
       headers: authHeader(),
     }).then((response) => {
       return response.data;
     });
   },
-  create(board) {
-    return HTTP.post(BASE_URL + "/threads", board, {
+  getThread(id){
+    return HTTP.get(BASE_URL + "/threads/" + id, {
       headers: authHeader(),
     }).then((response) => {
       return response.data;
     });
   },
-  edit(board) {
-    return HTTP.put(BASE_URL + "/threads/" + board.id, board, {
+  create(thread) {
+    return HTTP.post(BASE_URL + "/threads", thread, {
+      headers: authHeader(),
+    }).then((response) => {
+      return response.data;
+    });
+  },
+  edit(thread) {
+    return HTTP.put(BASE_URL + "/threads/" + thread.id, thread, {
       headers: authHeader(),
     }).then((response) => {
       return response.data;

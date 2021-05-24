@@ -33,7 +33,7 @@ public class MediaService {
 
     public MediaDTO create(MultipartFile file) throws IOException {
 
-        String newFilename = file.hashCode() + "_" + new Date().getTime() + "_" + file.getName();
+        String newFilename = file.hashCode() + "_" + new Date().getTime() + "_" + file.getOriginalFilename();
         File savedFile = new File(MEDIA_PATH + newFilename);
 
         OutputStream os = new FileOutputStream(savedFile);

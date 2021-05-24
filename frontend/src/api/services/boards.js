@@ -8,6 +8,13 @@ export default {
       return response.data;
     });
   },
+  getBoard(id) {
+    return HTTP.get(BASE_URL + "/boards/" + id, {
+      headers: authHeader(),
+    }).then((response) => {
+      return response.data;
+    });
+  },
   create(board) {
     return HTTP.post(BASE_URL + "/boards", board, {
       headers: authHeader(),

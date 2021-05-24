@@ -80,26 +80,15 @@ export default {
       api.media
         .create(formData)
         .then((response) => {
-          api.users
-            .edit({
-              id: this.userId,
-              username: this.username,
-              email: this.email,
-              avatarId: response.id,
-            })
-            .then(() => {
-              this.$store.commit(
-                "auth/editedUserAvatar",
-                String(response.fileName)
-              );
-            })
-            .catch((error) => {
-              console.log(error);
-              alert(error.response.data);
-            });
+          this.$store.dispatch("auth/editUser", {
+            id: this.userId,
+            username: this.username,
+            email: this.email,
+            avatarId: response.id,
+            avatarFile: response.fileName,
+          });
         })
         .catch((error) => {
-          console.log(error);
           alert(error.response.data);
         });
     },
@@ -113,9 +102,6 @@ export default {
     },
     email() {
       return this.$store.getters["auth/email"];
-    },
-    avatar() {
-      return require("@/../../media/" + this.$store.getters["auth/avatar"]);
     },
   },
 };

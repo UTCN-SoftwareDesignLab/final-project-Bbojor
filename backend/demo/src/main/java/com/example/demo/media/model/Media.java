@@ -1,6 +1,7 @@
 package com.example.demo.media.model;
 
 import com.example.demo.post.model.Post;
+import com.example.demo.thread.model.ForumThread;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,5 +29,9 @@ public class Media {
     @JoinColumn(name = "post_id")
     @ManyToOne
     private Post post;
+
+    @JoinColumn(name = "thread_id")
+    @ManyToOne
+    private ForumThread thread;
 
 }

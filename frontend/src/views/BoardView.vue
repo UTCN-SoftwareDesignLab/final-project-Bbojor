@@ -45,7 +45,7 @@ export default {
     async refreshList() {
       this.dialogVisible = false;
       this.selectedThread = {};
-      this.boards = await api.boards.allBoards();
+      this.boards = await api.boards.threads.allThreadsFiltered("boardId=" + this.board.id);;
     },
     closeDialog() {
       this.dialogVisible = false;

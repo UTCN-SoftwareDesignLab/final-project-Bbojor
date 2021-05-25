@@ -11,6 +11,12 @@
         <v-form>
           <v-text-field v-model="thread.title" label="Name" />
           <v-textarea v-model="thread.text"> Description </v-textarea>
+          <input
+            type="file"
+            multiple="multiple"
+            accept="image/*"
+            @change="onFilesPicked"
+          />
         </v-form>
         <v-card-actions>
           <v-btn @click="persist"> Create </v-btn>
@@ -33,23 +39,50 @@ export default {
   data() {
     return {
       thread: {},
+      formData: null,
     };
   },
   methods: {
     persist() {
-      api.threads
-        .create({
-          title: this.thread.title,
-          text: this.thread.text,
-          boardId: this.boardId,
-          userId: this.userId,
-        })
-        .then(() => {
-          this.$emit("refresh");
-        })
-        .catch((error) => {
-          alert(error.response.data);
+      if (this.formData) {
+        console.log(this.formData);
+        api.media.createMultiple(this.formData).then((response) => {
+          console.log(response);
+          api.threads
+            .create({
+              title: this.thread.title,
+              text: this.thread.text,
+              boardId: this.boardId,
+              userId: this.userId,
+              media: response,
+            })
+            .then(() => {
+              this.$emit("refresh");
+            })
+            .catch((error) => {
+              alert(error.response.data);
+            });
         });
+      } else
+        api.threads
+          .create({
+            title: this.thread.title,
+            text: this.thread.text,
+            boardId: this.boardId,
+            userId: this.userId,
+          })
+          .then(() => {
+            this.$emit("refresh");
+          })
+          .catch((error) => {
+            alert(error.response.data);
+          });
+    },
+    onFilesPicked(event) {
+      this.formData = new FormData();
+      for (let i = 0; i < event.target.files.length; i++) {
+        this.formData.append("files", event.target.files[i]);
+      }
     },
     close() {
       this.$emit("close-dialog");

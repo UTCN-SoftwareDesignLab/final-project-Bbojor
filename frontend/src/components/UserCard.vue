@@ -34,7 +34,6 @@ export default {
       router.push("/profile");
     },
     avatar() {
-      //console.log(this.$store.getters["auth/avatar"]);
       return require("@/../../media/" + this.$store.getters["auth/avatar"]);
     },
   },

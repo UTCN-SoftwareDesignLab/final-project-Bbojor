@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,9 @@ public class PostService {
     }
 
     public PostDTO create(PostDTO postDTO) {
+        if(postDTO.getDate() == null) {
+            postDTO.setDate(new Date());
+        }
         return postMapper.toDto(
                 postRepository.save(postMapper.fromDto(postDTO))
         );

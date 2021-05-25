@@ -9,7 +9,7 @@
     </v-form>
     <input type="file" accept="image/*" @change="onFilePicked" />
     <v-card-actions>
-      <v-btn @click="persist"> Save Changes</v-btn>
+      <v-btn @click="persist">Change Email</v-btn>
       <v-btn class="btn btn-info" @click="changeProfilePicture"
         >Change profile picture</v-btn
       >

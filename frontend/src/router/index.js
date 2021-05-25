@@ -6,6 +6,7 @@ import Login from "../views/Login";
 import Home from "../views/Home";
 import ProfileView from "@/views/ProfileView";
 import BoardView from "@/views/BoardView";
+import ThreadView from "@/views/ThreadView";
 
 Vue.use(VueRouter);
 
@@ -55,6 +56,18 @@ const routes = [
     path: "/threads",
     name: "Threads",
     component: BoardView,
+    beforeEnter: (to, from, next) => {
+      if (store.state.status.loggedIn) {
+        next();
+      } else {
+        next({ name: "Login" });
+      }
+    },
+  },
+  {
+    path: "/posts",
+    name: "Posts",
+    component: ThreadView,
     beforeEnter: (to, from, next) => {
       if (store.state.status.loggedIn) {
         next();

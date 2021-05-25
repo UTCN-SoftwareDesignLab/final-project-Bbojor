@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.demo.Constants.MEDIA_PATH;
 
@@ -52,4 +52,24 @@ public class MediaService {
         mediaRepository.deleteById(id);
     }
 
+    public List<MediaDTO> createMultiple(MultipartFile[] files) throws IOException {
+
+        List<Media> mediaList = new ArrayList<>();
+
+        for(MultipartFile f:files) {
+            String newFilename = f.hashCode() + "_" + new Date().getTime() + "_" + f.getOriginalFilename();
+            File savedFile = new File(MEDIA_PATH + newFilename);
+
+            OutputStream os = new FileOutputStream(savedFile);
+            os.write(f.getBytes());
+
+             mediaList.add(Media.builder()
+                    .fileName(newFilename)
+                    .build());
+        }
+
+        return mediaRepository.saveAll(mediaList).stream().
+                map(mediaMapper::toDto).
+                collect(Collectors.toList());
+    }
 }

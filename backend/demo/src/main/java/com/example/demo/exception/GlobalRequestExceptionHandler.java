@@ -46,6 +46,7 @@ public class GlobalRequestExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({HttpMessageNotReadableException.class, IllegalStateException.class, MissingServletRequestPartException.class})
     public String handleValidationExceptions(Exception ex) {
+        System.out.println(ex.getMessage());
         return "Invalid fields in input";
     }
 

@@ -10,13 +10,14 @@
     </v-list-item>
 
     <v-card-actions>
-      <v-btn text @click="goToBoard">View</v-btn>
-      <v-btn v-if="isAdmin" text @click="deleteThread">Remove Thread</v-btn>
+      <v-btn text @click="goToThread">View</v-btn>
+      <v-btn v-if="isMod" text @click="deleteThread">Remove Thread</v-btn>
     </v-card-actions>
 
     <ThreadDialog
       :opened="dialogVisible"
       :thread="thread"
+      @refresh="refresh"
       @close-dialog="closeDialog"
     ></ThreadDialog>
   </v-card>
@@ -25,6 +26,7 @@
 <script>
 import ThreadDialog from "@/components/ThreadDialog";
 import api from "@/api";
+import router from "@/router";
 
 export default {
   name: "ThreadCard",
@@ -57,11 +59,16 @@ export default {
       this.dialogVisible = false;
       this.refresh();
     },
-    goToBoard() {},
+    goToThread() {
+      router.push({
+        name: "Posts",
+        params: { thread: this.thread },
+      });
+    },
   },
   computed: {
-    isAdmin() {
-      return this.$store.getters["auth/isAdmin"];
+    isMod() {
+      return this.$store.getters["auth/isMod"];
     },
   },
 };

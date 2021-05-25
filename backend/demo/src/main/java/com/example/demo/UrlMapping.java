@@ -22,4 +22,5 @@ public class UrlMapping {
     public static final String ENTITY = "/{id}";
 
     public static final String FILTERED = "/filtered";
+    public static final String LIST = "/list";
 }

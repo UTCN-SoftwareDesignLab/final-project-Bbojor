@@ -1,36 +1,36 @@
 import authHeader, { BASE_URL, HTTP } from "../http";
 
 export default {
-  allConsultations() {
-    return HTTP.get(BASE_URL + "/consultations", {
+  allPostsFiltered(search) {
+    return HTTP.get(BASE_URL + "/posts/filtered?" + search, {
       headers: authHeader(),
     }).then((response) => {
       return response.data;
     });
   },
-  allConsultationsFiltered(search) {
-    return HTTP.get(BASE_URL + "/consultations/filtered?" + search, {
+  getPost(id) {
+    return HTTP.get(BASE_URL + "/posts/" + id, {
       headers: authHeader(),
     }).then((response) => {
       return response.data;
     });
   },
-  create(consultation) {
-    return HTTP.post(BASE_URL + "/consultations", consultation, {
+  create(post) {
+    return HTTP.post(BASE_URL + "/posts", post, {
       headers: authHeader(),
     }).then((response) => {
       return response.data;
     });
   },
-  edit(consultation) {
-    return HTTP.put(BASE_URL + "/consultations/" + consultation.id, consultation, {
+  edit(post) {
+    return HTTP.put(BASE_URL + "/posts/" + post.id, post, {
       headers: authHeader(),
     }).then((response) => {
       return response.data;
     });
   },
   delete(id) {
-    return HTTP.delete(BASE_URL + "/consultations/" + id, {
+    return HTTP.delete(BASE_URL + "/posts/" + id, {
       headers: authHeader(),
     }).then((response) => {
       return response.data;

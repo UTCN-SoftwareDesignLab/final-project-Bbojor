@@ -15,12 +15,6 @@ public interface PostMapper {
     @Named("idToUser")
     default User idToUser(Long id) { return User.builder().id(id).build(); }
 
-    @Named("userToName")
-    default String userToNamed(User user) { return user.getUsername(); }
-
-    @Named("userToAvatar")
-    default String userToAvatar(User user) { return user.getAvatar().getFileName(); }
-
     @Named("threadToId")
     default Long threadToId(ForumThread thread) { return thread.getId(); }
 
@@ -29,8 +23,6 @@ public interface PostMapper {
 
     @Mapping(source = "forumThread", target = "threadId", qualifiedByName = "threadToId")
     @Mapping(source = "user", target = "userId", qualifiedByName = "userToId")
-    @Mapping(source = "user", target = "username", qualifiedByName = "userToName")
-    @Mapping(source = "user", target = "userAvatar", qualifiedByName = "userToAvatar")
     PostDTO toDto(Post post);
 
     @Mapping(source = "userId", target = "user", qualifiedByName = "idToUser")

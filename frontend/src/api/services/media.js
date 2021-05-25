@@ -15,6 +15,13 @@ export default {
       return response.data;
     });
   },
+  createMultiple(images) {
+    return HTTP.post(BASE_URL + "/media/list", images, {
+      headers: authHeader(),
+    }).then((response) => {
+      return response.data;
+    });
+  },
   delete(id) {
     return HTTP.delete(BASE_URL + "/media/" + id, {
       headers: authHeader(),

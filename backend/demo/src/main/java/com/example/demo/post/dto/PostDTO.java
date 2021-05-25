@@ -28,12 +28,8 @@ public class PostDTO {
     @NotNull(message = "Post must have a user")
     private Long userId;
 
-    private String username;
-
-    private String userAvatar;
-
-    @NotNull(message = "Post must have a user")
-    private Date date;
+    @Builder.Default
+    private Date date = null;
 
     @NotNull(message = "Post must belong to a thread")
     private Long threadId;

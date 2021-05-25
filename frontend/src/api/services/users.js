@@ -8,6 +8,13 @@ export default {
       }
     );
   },
+  getUser(id) {
+    return HTTP.get(BASE_URL + "/users/" + id, {
+      headers: authHeader(),
+    }).then((response) => {
+      return response.data;
+    });
+  },
   allUsersByRole(role) {
     return HTTP.get(BASE_URL + "/users/filtered?role=" + role, {
       headers: authHeader(),

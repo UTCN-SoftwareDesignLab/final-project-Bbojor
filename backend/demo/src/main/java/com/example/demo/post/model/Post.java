@@ -30,7 +30,7 @@ public class Post {
     private String text;
 
     @JoinColumn(name = "user_id", updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private User user;
 
     @JoinColumn(name = "forum_thread_id", updatable = false)

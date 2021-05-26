@@ -7,9 +7,15 @@
   >
     <template>
       <v-card>
-        <v-toolbar color="primary" dark> Create thread </v-toolbar>
+        <v-toolbar color="primary" dark> Create post </v-toolbar>
         <v-form>
           <v-textarea v-model="post.text"> Description </v-textarea>
+          <input
+            type="file"
+            multiple="multiple"
+            accept="image/*"
+            @change="onFilesPicked"
+          />
         </v-form>
         <v-card-actions>
           <v-btn @click="persist"> Post </v-btn>
@@ -32,16 +38,21 @@ export default {
   data() {
     return {
       post: {},
+      formData: null,
+      files: [],
     };
   },
   methods: {
     persist() {
+      if (this.formData == null) this.formData = new FormData();
+      const json = JSON.stringify({
+        text: this.post.text,
+        threadId: this.threadId,
+        userId: this.userId,
+      });
+      this.formData.set("post", json);
       api.posts
-        .create({
-          text: this.post.text,
-          threadId: this.threadId,
-          userId: this.userId,
-        })
+        .create(this.formData)
         .then(() => {
           this.$emit("refresh");
         })
@@ -51,6 +62,13 @@ export default {
     },
     close() {
       this.$emit("close-dialog");
+    },
+    onFilesPicked(event) {
+      this.formData = null;
+      this.formData = new FormData();
+      for (let i = 0; i < event.target.files.length; i++) {
+        this.formData.append("files", event.target.files[i]);
+      }
     },
   },
   computed: {

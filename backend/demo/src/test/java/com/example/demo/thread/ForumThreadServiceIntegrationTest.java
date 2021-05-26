@@ -113,7 +113,7 @@ public class ForumThreadServiceIntegrationTest {
     public void create() {
         ForumThreadDTO forumThreadDTO = TestCreationFactory.newForumThreadDTO();
         forumThreadDTO.setBoardId(board1.getId());
-        forumThreadDTO = forumThreadService.create(forumThreadDTO);
+        //forumThreadDTO = forumThreadService.create(forumThreadDTO);
 
         ForumThreadDTO thread = forumThreadService.getForumThread(forumThreadDTO.getId());
         assertEquals(forumThreadDTO.getTitle(), thread.getTitle());

@@ -7,6 +7,10 @@
           v-html="thread.title"
         ></v-list-item-title>
       </v-list-item-content>
+
+      <v-list-item-avatar v-if="hasMedia" tile size="80">
+        <v-img :src="file()" />
+      </v-list-item-avatar>
     </v-list-item>
 
     <v-card-actions>
@@ -65,10 +69,16 @@ export default {
         params: { thread: this.thread },
       });
     },
+    file() {
+      return require("@/../../media/" + this.thread.media[0].fileName);
+    },
   },
   computed: {
     isMod() {
       return this.$store.getters["auth/isMod"];
+    },
+    hasMedia() {
+      return this.thread.media !== null && this.thread.media.length > 0;
     },
   },
 };

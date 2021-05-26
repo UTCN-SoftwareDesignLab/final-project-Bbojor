@@ -25,14 +25,7 @@ public class UserController {
 
     @GetMapping(FILTERED)
     public List<UserDTO> findAllByRole(@ModelAttribute("filter") UserFilterRequestDTO filter) {
-        return userService.findAllByRole(filter.getRole());
-    }
-
-    @ModelAttribute("filter")
-    public UserFilterRequestDTO getFilter(@RequestParam(value = "role", required = false) String role) {
-        return UserFilterRequestDTO.builder()
-                .role(role)
-                .build();
+        return userService.findByUsernameLike(filter.getUsername());
     }
 
     @PutMapping(ENTITY)

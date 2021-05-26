@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.validation.SmartValidator;
 
 import java.util.List;
 
@@ -27,10 +28,13 @@ public class ForumThreadControllerTest extends BaseControllerTest {
     @Mock
     private ForumThreadService forumThreadService;
 
+    @Mock
+    private SmartValidator smartValidator;
+
     @BeforeEach
     protected void setUp() {
         super.setUp();
-        controller = new ForumThreadController(forumThreadService);
+        controller = new ForumThreadController(forumThreadService, smartValidator);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
@@ -100,7 +104,7 @@ public class ForumThreadControllerTest extends BaseControllerTest {
     @Test
     void create() throws Exception {
         ForumThreadDTO forumThreadDTO = TestCreationFactory.newForumThreadDTO();
-        when(forumThreadService.create(forumThreadDTO)).thenReturn(forumThreadDTO);
+    //    when(forumThreadService.create(forumThreadDTO)).thenReturn(forumThreadDTO);
 
         ResultActions result = performPostWithRequestBody(THREADS, forumThreadDTO);
         result.andExpect(status().isOk())

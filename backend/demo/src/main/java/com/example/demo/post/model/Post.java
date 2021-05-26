@@ -1,25 +1,20 @@
 package com.example.demo.post.model;
 
-
 import com.example.demo.media.model.Media;
 import com.example.demo.thread.model.ForumThread;
 import com.example.demo.user.model.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
+@Getter
+@Setter
 public class Post {
 
     @Id
@@ -41,7 +36,7 @@ public class Post {
     private Date date;
 
     @Column
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "post")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "post",  cascade = CascadeType.ALL)
     @Builder.Default
     private Set<Media> media = new HashSet<>();
 }

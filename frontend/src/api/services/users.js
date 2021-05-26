@@ -15,8 +15,8 @@ export default {
       return response.data;
     });
   },
-  allUsersByRole(role) {
-    return HTTP.get(BASE_URL + "/users/filtered?role=" + role, {
+  allUsersByUsername(username) {
+    return HTTP.get(BASE_URL + "/users/filtered?username=" + username, {
       headers: authHeader(),
     }).then((response) => {
       return response.data;

@@ -1,6 +1,5 @@
 package com.example.demo.user.dto;
 
-import com.example.demo.media.model.Media;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

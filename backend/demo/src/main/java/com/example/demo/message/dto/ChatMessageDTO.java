@@ -13,13 +13,15 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class ChatMessage {
+public class ChatMessageDTO {
+
+    private Long id;
 
     @NotNull(message = "Missing sender id")
-    private Long senderID;
+    private Long senderId;
 
     @NotNull(message = "Missing recipient id")
-    private Long recipientID;
+    private Long recipientId;
 
     @NotBlank(message = "Message must have a body")
     private String message;

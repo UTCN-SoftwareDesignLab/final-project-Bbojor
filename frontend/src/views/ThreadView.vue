@@ -4,6 +4,7 @@
       <v-row class="elevation-2">
         <div class="title mb-5">{{ this.thread.title }}</div>
       </v-row>
+
       <v-row>
         <v-col class="elevation-2">
           <div class="title mb-2">{{ this.user.username }}</div>
@@ -13,10 +14,21 @@
             class="mb-3"
             :src="avatar()"
           />
-          <v-btn v-if="isDifferentUser" @click="startChat"> Chat </v-btn>
         </v-col>
+
         <v-col :cols="10">
-          <v-list-item-subtitle>{{ this.thread.text }}</v-list-item-subtitle>
+          <v-list-item-subtitle class="mb-5">{{
+            this.thread.text
+          }}</v-list-item-subtitle>
+
+          <v-row class="flex-row float-left">
+            <ToggleableImage
+              v-for="image in this.thread.media"
+              class="ma-3 image"
+              v-bind:key="image.id"
+              :src="image.fileName"
+            />
+          </v-row>
         </v-col>
       </v-row>
     </v-container>
@@ -25,7 +37,7 @@
 
     <v-container class="ma-2 float-left">
       <PostCard
-        v-for="post in posts"
+        v-for="post in this.posts"
         v-bind:post="post"
         v-bind:key="post.id"
         @refresh="refreshList"
@@ -46,16 +58,20 @@
 
 import PostDialog from "@/components/PostDialog";
 import PostCard from "@/components/PostCard";
+
 import api from "@/api";
+import ToggleableImage from "@/components/ToggleableImage";
 
 export default {
   name: "Posts",
-  components: { PostDialog, PostCard },
+  components: { ToggleableImage, PostDialog, PostCard },
   data() {
     return {
+      isFetching: true,
       thread: {},
       user: {},
       posts: [],
+      imageSizes: [],
       search: "",
       dialogVisible: false,
     };
@@ -65,11 +81,9 @@ export default {
       this.dialogVisible = true;
     },
     async refreshList() {
+      this.isFetching = true;
       this.dialogVisible = false;
-      this.selectedThread = {};
-      this.posts = await api.posts.allPostsFiltered(
-        "threadId=" + this.thread.id
-      );
+      this.posts = await api.posts.allPostsFiltered("threadId=" + this.thread.id);
     },
     closeDialog() {
       this.dialogVisible = false;

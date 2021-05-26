@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.validation.SmartValidator;
 
 import java.util.List;
 
@@ -27,10 +28,13 @@ public class PostControllerTest extends BaseControllerTest {
     @Mock
     private PostService postService;
 
+    @Mock
+    private SmartValidator validator;
+
     @BeforeEach
     protected void setUp() {
         super.setUp();
-        controller = new PostController(postService);
+        controller = new PostController(postService, validator);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
@@ -86,7 +90,7 @@ public class PostControllerTest extends BaseControllerTest {
     @Test
     void create() throws Exception {
         PostDTO postDTO = TestCreationFactory.newPostDTO();
-        when(postService.create(postDTO)).thenReturn(postDTO);
+      //  when(postService.create(postDTO)).thenReturn(postDTO);
 
         ResultActions result = performPostWithRequestBody(POSTS, postDTO);
         result.andExpect(status().isOk())

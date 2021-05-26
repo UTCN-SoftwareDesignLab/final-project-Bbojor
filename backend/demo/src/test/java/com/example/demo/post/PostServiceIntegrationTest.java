@@ -139,7 +139,7 @@ public class PostServiceIntegrationTest {
         PostDTO postDTO = TestCreationFactory.newPostDTO();
         postDTO.setThreadId(thread1.getId());
         postDTO.setUserId(user1.getId());
-        postDTO = postService.create(postDTO);
+        //postDTO = postService.create(postDTO);
 
         PostFilterRequestDTO userFilter = PostFilterRequestDTO.builder()
                 .userId(user1.getId())

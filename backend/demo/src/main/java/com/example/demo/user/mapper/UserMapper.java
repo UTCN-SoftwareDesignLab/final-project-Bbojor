@@ -23,7 +23,6 @@ public interface UserMapper {
     @Named("idToAvatar")
     default Media idToAvatar(Long id) { return Media.builder().id(id).build(); }
 
-
     @Mappings({
             @Mapping(target = "roles", ignore = true),
             @Mapping(source = "avatar", target = "avatarId", qualifiedByName = "avatarToId"),
@@ -39,13 +38,13 @@ public interface UserMapper {
     User fromDto(UserDTO dto);
 
     @AfterMapping
-    default void populateRoles(User user, @MappingTarget UserDTO userDTO) {
-        userDTO.setRoles(user.getRoles().stream().map(r -> r.getName().name()).collect(Collectors.toSet()));
+    default UserDTO populateRoles(User user, @MappingTarget UserDTO.UserDTOBuilder userDTO) {
+        return userDTO.roles(user.getRoles().stream().map(r -> r.getName().name()).collect(Collectors.toSet())).build();
     }
 
     @AfterMapping
-    default void populateRoles(UserDTO userDTO, @MappingTarget User user) {
-        user.setRoles(userDTO.getRoles().stream().map(r -> Role.builder().name(ERole.valueOf(r)).build()).collect(Collectors.toSet()));
+    default void populateRoles(UserDTO userDTO, @MappingTarget User.UserBuilder user) {
+        user.roles(userDTO.getRoles().stream().map(r -> Role.builder().name(ERole.valueOf(r)).build()).collect(Collectors.toSet())).build();
     }
 }
 

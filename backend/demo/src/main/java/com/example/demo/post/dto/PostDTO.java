@@ -1,20 +1,17 @@
 package com.example.demo.post.dto;
 
+import com.example.demo.media.dto.MediaDTO;
 import com.example.demo.media.model.Media;
 import com.example.demo.thread.model.ForumThread;
 import com.example.demo.user.model.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,5 +32,5 @@ public class PostDTO {
     private Long threadId;
 
     @Builder.Default
-    private Set<Media> media = new HashSet<>();
+    private Set<MediaDTO> media = new HashSet<>();
 }

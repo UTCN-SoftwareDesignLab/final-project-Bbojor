@@ -3,13 +3,12 @@ package com.example.demo.thread.model;
 import com.example.demo.board.model.Board;
 import com.example.demo.media.model.Media;
 import com.example.demo.user.model.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,7 +16,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
+@Getter
+@Setter
 public class ForumThread {
 
     @Id
@@ -39,7 +39,7 @@ public class ForumThread {
     private String text;
 
     @Column
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "thread")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "thread", cascade = CascadeType.ALL)
     @Builder.Default
     private Set<Media> media = new HashSet<>();
 }

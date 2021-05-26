@@ -10,5 +10,5 @@ import lombok.RequiredArgsConstructor;
 public class UserFilterRequestDTO {
 
     @Builder.Default
-    private final String role = "";
+    private final String username = "";
 }

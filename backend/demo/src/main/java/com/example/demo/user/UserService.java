@@ -74,6 +74,11 @@ public class UserService {
         return userMapper.toDto(userRepository.save(actualUser));
     }
 
+    public List<UserDTO> findByUsernameLike(String username) {
+        return userRepository.findAllByUsernameLike(username).stream()
+                .map(userMapper::toDto).collect(Collectors.toList());
+    }
+
     public UserDTO getUser(Long id) {
 
         return userMapper.toDto(

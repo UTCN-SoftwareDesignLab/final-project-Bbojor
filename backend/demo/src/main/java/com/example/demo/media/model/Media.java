@@ -2,10 +2,7 @@ package com.example.demo.media.model;
 
 import com.example.demo.post.model.Post;
 import com.example.demo.thread.model.ForumThread;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -16,7 +13,8 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
+@Getter
+@Setter
 public class Media {
 
     @Id

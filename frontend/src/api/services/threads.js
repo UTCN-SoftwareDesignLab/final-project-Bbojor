@@ -8,9 +8,9 @@ export default {
       return response.data;
     });
   },
-  getThread(id){
+  getThread(id) {
     return HTTP.get(BASE_URL + "/threads/" + id, {
-      headers: authHeader(),
+      headers: authHeader().append("Content-Type", false),
     }).then((response) => {
       return response.data;
     });

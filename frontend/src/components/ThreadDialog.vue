@@ -40,45 +40,30 @@ export default {
     return {
       thread: {},
       formData: null,
+      files: [],
     };
   },
   methods: {
     persist() {
-      if (this.formData) {
-        console.log(this.formData);
-        api.media.createMultiple(this.formData).then((response) => {
-          console.log(response);
-          api.threads
-            .create({
-              title: this.thread.title,
-              text: this.thread.text,
-              boardId: this.boardId,
-              userId: this.userId,
-              media: response,
-            })
-            .then(() => {
-              this.$emit("refresh");
-            })
-            .catch((error) => {
-              alert(error.response.data);
-            });
+      if (this.formData == null) this.formData = new FormData();
+      const json = JSON.stringify({
+        title: this.thread.title,
+        text: this.thread.text,
+        boardId: this.boardId,
+        userId: this.userId,
+      });
+      this.formData.set("thread", json);
+      api.threads
+        .create(this.formData)
+        .then(() => {
+          this.$emit("refresh");
+        })
+        .catch((error) => {
+          alert(error.response.data);
         });
-      } else
-        api.threads
-          .create({
-            title: this.thread.title,
-            text: this.thread.text,
-            boardId: this.boardId,
-            userId: this.userId,
-          })
-          .then(() => {
-            this.$emit("refresh");
-          })
-          .catch((error) => {
-            alert(error.response.data);
-          });
     },
     onFilesPicked(event) {
+      this.formData = null;
       this.formData = new FormData();
       for (let i = 0; i < event.target.files.length; i++) {
         this.formData.append("files", event.target.files[i]);

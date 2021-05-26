@@ -1,17 +1,19 @@
 package com.example.demo.thread.dto;
 
+import com.example.demo.media.dto.MediaDTO;
 import com.example.demo.media.model.Media;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,5 +34,6 @@ public class ForumThreadDTO {
     private String text;
 
     @Builder.Default
-    private Set<Media> media = new HashSet<>();
+    private Set<MediaDTO> media = new HashSet<>();
+
 }

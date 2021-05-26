@@ -1,18 +1,24 @@
 <template>
   <v-container class="float-left elevation-5">
     <v-row>
-      <v-col class="elevation-7">
-        <v-col class="d-flex elevation-2">
-          <div class="title mb-3">{{ this.user.username }}</div>
-          <v-img max-width="100" max-height="100" class="mb-3" :src="avatar()" />
-          <v-btn v-if="!isPoster" @click="startChat"> Chat </v-btn>
-        </v-col>
+      <v-col class="elevation-2">
+        <div class="title mb-5">{{ this.user.username }}</div>
+        <v-img max-width="100" max-height="100" class="mb-3" :src="avatar()" />
         <v-btn v-if="isMod || isPoster" text @click="deletePost"
           >Remove Post</v-btn
         >
       </v-col>
       <v-col :cols="10">
         <v-list-item-subtitle>{{ this.post.text }}</v-list-item-subtitle>
+
+        <v-row class="flex-row float-left">
+          <ToggleableImage
+            v-for="image in this.post.media"
+            class="ma-3 image"
+            v-bind:key="image.id"
+            :src="image.fileName"
+          />
+        </v-row>
       </v-col>
     </v-row>
   </v-container>
@@ -20,9 +26,11 @@
 
 <script>
 import api from "@/api";
+import ToggleableImage from "@/components/ToggleableImage";
 
 export default {
   name: "PostCard",
+  components: { ToggleableImage },
   data() {
     return {
       dialogVisible: false,
@@ -55,8 +63,7 @@ export default {
     avatar() {
       return require("@/../../media/" + this.user.avatarFile);
     },
-    startChat() {
-    }
+    startChat() {},
   },
   computed: {
     isMod() {

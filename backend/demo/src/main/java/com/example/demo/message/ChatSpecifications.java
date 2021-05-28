@@ -15,16 +15,16 @@ public class ChatSpecifications {
     }
 
     public static Specification<ChatMessage> specificationFromFilter(ChatFilterRequestDTO filter) {
+
         Specification<ChatMessage> specification = (root, query, criteriaBuilder) -> criteriaBuilder.and();
+        specification = specification.and(senderId(filter.getSenderId()));
+        specification = specification.and(recipientId(filter.getRecipientId()));
 
-        if(filter.getSenderId() != null) {
-            specification = specification.and(senderId(filter.getSenderId()));
-        }
+        //also grab messages going the other way in order to have complete conversations
+        Specification<ChatMessage> specificationReverse = (root, query, criteriaBuilder) -> criteriaBuilder.and();
+        specificationReverse = specificationReverse.and(senderId(filter.getRecipientId()));
+        specificationReverse = specificationReverse.and(recipientId(filter.getSenderId()));
 
-        if(filter.getRecipientId() != null) {
-            specification = specification.and(recipientId(filter.getRecipientId()));
-        }
-
-        return specification;
+        return specification.or(specificationReverse);
     }
 }

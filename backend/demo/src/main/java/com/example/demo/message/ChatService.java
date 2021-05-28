@@ -23,12 +23,11 @@ public class ChatService {
     private final ChatMessageMapper chatMessageMapper;
 
     public void handleMessage(ChatMessageDTO chatMessage) {
-
+        System.out.println(chatMessage);
         chatRepository.save(chatMessageMapper.fromDto(chatMessage));
-
         simpMessagingTemplate.convertAndSend(
                 "/user/" + chatMessage.getRecipientId() + "/" + chatMessage.getSenderId(),
-                chatMessage.getMessage());
+                chatMessage);
     }
 
     public List<ChatMessageDTO> getFiltered(ChatFilterRequestDTO filter) {
@@ -36,4 +35,10 @@ public class ChatService {
                 .stream().map(chatMessageMapper::toDto).collect(Collectors.toList());
     }
 
+    public void handleMessageRequest(ChatMessageDTO chatMessage) {
+        System.out.println(chatMessage);
+        simpMessagingTemplate.convertAndSend(
+                "/user/" + chatMessage.getRecipientId() + "/requests",
+                chatMessage);
+    }
 }

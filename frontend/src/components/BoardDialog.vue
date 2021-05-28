@@ -59,7 +59,7 @@ export default {
           })
           .then(() => this.$emit("close-dialog"))
           .catch((error) => {
-            alert(error.response.data);
+            alert(JSON.stringify(error.response.data));
           });
       }
     },

@@ -30,7 +30,7 @@ public class ForumThreadDTO {
     @NotNull(message = "Thread must have a user posting it")
     private Long userId;
 
-    @NotNull(message = "Thread starter must contain some text")
+    @NotBlank(message = "Thread starter must contain some text")
     private String text;
 
     @Builder.Default

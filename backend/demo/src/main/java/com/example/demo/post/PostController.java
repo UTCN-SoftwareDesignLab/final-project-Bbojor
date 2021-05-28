@@ -24,29 +24,15 @@ import static com.example.demo.UrlMapping.*;
 public class PostController {
 
     private final PostService postService;
-    private final SmartValidator validator;
 
     @GetMapping(FILTERED)
     public List<PostDTO> findAllFiltered(@ModelAttribute("filter") PostFilterRequestDTO filter) {
         return  postService.findAllFiltered(filter);
     }
 
-    @PostMapping
-    public PostDTO create(@RequestParam("post") String threadString, @RequestParam(value = "files", required = false) MultipartFile[] files) throws MethodArgumentNotValidException, IOException {
-
-        PostDTO postDTO = new ObjectMapper().readValue(threadString, PostDTO.class);
-
-        DataBinder binder = new DataBinder(postDTO);
-        binder.setValidator(validator);
-
-        binder.validate(postDTO);
-        BindingResult result = binder.getBindingResult();
-
-        if(result.hasErrors()) {
-            throw new MethodArgumentNotValidException(null , result);
-        }
-        else
-            return postService.create(postDTO, files);
+    @PostMapping(consumes = {"multipart/form-data"})
+    public PostDTO create(@RequestPart("post") PostDTO postDTO, @RequestPart(value = "files", required = false) MultipartFile[] files) throws IOException {
+        return postService.create(postDTO, files);
     }
 
     @PutMapping(ENTITY)

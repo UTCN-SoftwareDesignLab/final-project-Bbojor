@@ -3,19 +3,17 @@
     <v-main>
       <v-container fluid>
         <TopBar v-if="isLoggedIn"></TopBar>
-        <router-view></router-view>
-        <v-btn
-          v-if="isLoggedIn"
-          fixed
-          class="v-btn--bottom v-btn--right"
-          @click="showChat"
-          >Chat</v-btn
-        >
-        <ChatWindow
-          :visible="showChatWindow"
-          fixed
-          class="v-btn--bottom v-btn--right"
-        ></ChatWindow>
+        <v-container fluid>
+          <router-view class="float-left"></router-view>
+          <ChatWindow v-if="isLoggedIn" :visible="showChatWindow"  class="float-right"></ChatWindow>
+          <v-btn
+            v-if="isLoggedIn"
+            fixed
+            class="v-btn--bottom v-btn--right"
+            @click="showChat"
+            >Chat</v-btn
+          >
+        </v-container>
       </v-container>
     </v-main>
   </v-app>
@@ -32,7 +30,7 @@ export default {
   }),
   methods: {
     showChat() {
-      console.log("here")
+      console.log("here");
       this.showChatWindow = !this.showChatWindow;
     },
   },

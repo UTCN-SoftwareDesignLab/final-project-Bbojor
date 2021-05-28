@@ -28,13 +28,10 @@ public class PostControllerTest extends BaseControllerTest {
     @Mock
     private PostService postService;
 
-    @Mock
-    private SmartValidator validator;
-
     @BeforeEach
     protected void setUp() {
         super.setUp();
-        controller = new PostController(postService, validator);
+        controller = new PostController(postService);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
@@ -90,7 +87,7 @@ public class PostControllerTest extends BaseControllerTest {
     @Test
     void create() throws Exception {
         PostDTO postDTO = TestCreationFactory.newPostDTO();
-      //  when(postService.create(postDTO)).thenReturn(postDTO);
+        when(postService.create(postDTO, null)).thenReturn(postDTO);
 
         ResultActions result = performPostWithRequestBody(POSTS, postDTO);
         result.andExpect(status().isOk())

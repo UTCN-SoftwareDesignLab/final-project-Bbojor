@@ -17,9 +17,11 @@ public class UrlMapping {
     public static final String STOMP_WEB_SOCKET_ENDPOINT = API_PATH + "/websocket";
     public static final String BROKER_PREFIX = API_PATH + "/user-chat";
 
-    public static final String MESSAGES = "/messages";
+    public static final String MESSAGES = API_PATH + "/messages";
 
     public static final String ENTITY = "/{id}";
 
     public static final String FILTERED = "/filtered";
+    public static final String MESSAGE_REQUESTS = "/requests";
+    public static final String SOCKET_MESSAGES = "/messages";
 }

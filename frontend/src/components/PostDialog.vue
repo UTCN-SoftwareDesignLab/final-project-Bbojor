@@ -45,22 +45,37 @@ export default {
   methods: {
     persist() {
       if (this.formData == null) this.formData = new FormData();
-      const json = JSON.stringify({
-        text: this.post.text,
-        threadId: this.threadId,
-        userId: this.userId,
-      });
-      this.formData.set("post", json);
+
+      this.formData.append(
+        "post",
+        new Blob(
+          [
+            JSON.stringify({
+              text: this.post.text,
+              threadId: this.threadId,
+              userId: this.userId,
+            }),
+          ],
+          {
+            type: "application/json",
+          }
+        )
+      );
+
       api.posts
         .create(this.formData)
         .then(() => {
           this.$emit("refresh");
         })
         .catch((error) => {
-          alert(error.response.data);
+          alert(JSON.stringify(error.response.data));
         });
     },
     close() {
+      this.post = {};
+      this.formData = null;
+      this.files = [];
+      document.getElementById("fileInput").value = "";
       this.$emit("close-dialog");
     },
     onFilesPicked(event) {

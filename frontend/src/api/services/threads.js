@@ -10,14 +10,17 @@ export default {
   },
   getThread(id) {
     return HTTP.get(BASE_URL + "/threads/" + id, {
-      headers: authHeader().append("Content-Type", false),
+      headers: authHeader(),
     }).then((response) => {
       return response.data;
     });
   },
   create(thread) {
+    let headers = authHeader();
+    headers["Content-Type"] = undefined;
+    console.log(headers);
     return HTTP.post(BASE_URL + "/threads", thread, {
-      headers: authHeader(),
+      headers: headers,
     }).then((response) => {
       return response.data;
     });

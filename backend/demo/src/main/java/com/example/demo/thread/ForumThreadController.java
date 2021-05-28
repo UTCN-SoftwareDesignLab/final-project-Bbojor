@@ -2,12 +2,7 @@ package com.example.demo.thread;
 
 import com.example.demo.thread.dto.ForumThreadDTO;
 import com.example.demo.thread.dto.ForumThreadFilterRequestDTO;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.DataBinder;
-import org.springframework.validation.SmartValidator;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,30 +19,16 @@ import static com.example.demo.UrlMapping.ENTITY;
 public class ForumThreadController {
 
     private final ForumThreadService forumThreadService;
-    private final SmartValidator validator;
 
     @GetMapping(FILTERED)
     public List<ForumThreadDTO> findAllFiltered(@ModelAttribute("filter") ForumThreadFilterRequestDTO filter) {
         return forumThreadService.findAllFiltered(filter);
     }
 
-    // this is horrible but it's the only way I could get spring to eat some JSON with its images
-    @PostMapping
-    public ForumThreadDTO create( @RequestParam("thread") String threadString, @RequestParam(value = "files", required = false) MultipartFile[] files) throws IOException, MethodArgumentNotValidException {
-
-        ForumThreadDTO forumThreadDTO = new ObjectMapper().readValue(threadString, ForumThreadDTO.class);
-
-        DataBinder binder = new DataBinder(forumThreadDTO);
-        binder.setValidator(validator);
-        binder.validate(forumThreadDTO);
-
-        BindingResult result = binder.getBindingResult();
-
-        if(result.hasErrors()) {
-            throw new MethodArgumentNotValidException(null , result);
-        }
-        else
-            return forumThreadService.create(forumThreadDTO, files);
+    // apparently setting the content type to undefined in the frontend and setting it back to form-data here is what I was missing the first time I tried... pain
+    @PostMapping(consumes = {"multipart/form-data"})
+    public ForumThreadDTO create( @RequestPart("thread") ForumThreadDTO forumThreadDTO, @RequestPart(value = "files", required = false) MultipartFile[] files) throws IOException {
+        return forumThreadService.create(forumThreadDTO, files);
     }
 
     @GetMapping(ENTITY)

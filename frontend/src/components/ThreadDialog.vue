@@ -14,6 +14,7 @@
           <input
             type="file"
             multiple="multiple"
+            id="fileInput"
             accept="image/*"
             @change="onFilesPicked"
           />
@@ -46,20 +47,31 @@ export default {
   methods: {
     persist() {
       if (this.formData == null) this.formData = new FormData();
-      const json = JSON.stringify({
-        title: this.thread.title,
-        text: this.thread.text,
-        boardId: this.boardId,
-        userId: this.userId,
-      });
-      this.formData.set("thread", json);
+
+      this.formData.append(
+        "thread",
+        new Blob(
+          [
+            JSON.stringify({
+              title: this.thread.title,
+              text: this.thread.text,
+              boardId: this.boardId,
+              userId: this.userId,
+            }),
+          ],
+          {
+            type: "application/json",
+          }
+        )
+      );
+
       api.threads
         .create(this.formData)
         .then(() => {
           this.$emit("refresh");
         })
         .catch((error) => {
-          alert(error.response.data);
+          alert(JSON.stringify(error.response.data));
         });
     },
     onFilesPicked(event) {
@@ -70,6 +82,10 @@ export default {
       }
     },
     close() {
+      this.thread = {};
+      this.formData = null;
+      this.files = [];
+      document.getElementById("fileInput").value = '';
       this.$emit("close-dialog");
     },
   },

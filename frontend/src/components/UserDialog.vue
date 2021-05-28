@@ -77,7 +77,7 @@ export default {
         })
         .then(() => this.$emit("refresh"))
         .catch((error) => {
-          alert(error.response.data);
+          alert(JSON.stringify(error.response.data));
         });
     },
     deleteUser() {

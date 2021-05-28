@@ -25,4 +25,5 @@ public class ChatMessageDTO {
 
     @NotBlank(message = "Message must have a body")
     private String message;
+
 }

@@ -28,13 +28,10 @@ public class ForumThreadControllerTest extends BaseControllerTest {
     @Mock
     private ForumThreadService forumThreadService;
 
-    @Mock
-    private SmartValidator smartValidator;
-
     @BeforeEach
     protected void setUp() {
         super.setUp();
-        controller = new ForumThreadController(forumThreadService, smartValidator);
+        controller = new ForumThreadController(forumThreadService);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
@@ -104,7 +101,7 @@ public class ForumThreadControllerTest extends BaseControllerTest {
     @Test
     void create() throws Exception {
         ForumThreadDTO forumThreadDTO = TestCreationFactory.newForumThreadDTO();
-    //    when(forumThreadService.create(forumThreadDTO)).thenReturn(forumThreadDTO);
+        when(forumThreadService.create(forumThreadDTO, null)).thenReturn(forumThreadDTO);
 
         ResultActions result = performPostWithRequestBody(THREADS, forumThreadDTO);
         result.andExpect(status().isOk())

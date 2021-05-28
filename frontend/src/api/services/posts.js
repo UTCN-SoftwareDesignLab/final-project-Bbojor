@@ -16,15 +16,19 @@ export default {
     });
   },
   create(post) {
+    let headers = authHeader();
+    headers["Content-Type"] = undefined;
     return HTTP.post(BASE_URL + "/posts", post, {
-      headers: authHeader(),
+      headers: headers,
     }).then((response) => {
       return response.data;
     });
   },
   edit(post) {
+    let headers = authHeader();
+    headers["Content-Type"] = undefined;
     return HTTP.put(BASE_URL + "/posts/" + post.id, post, {
-      headers: authHeader(),
+      headers: headers,
     }).then((response) => {
       return response.data;
     });

@@ -22,11 +22,13 @@
 
 <script>
 import router from "@/router";
+import api from "@/api";
 
 export default {
   name: "UserCard",
   methods: {
     logout() {
+      api.chat.disconnect();
       this.$store.dispatch("auth/logout");
       router.push("/");
     },

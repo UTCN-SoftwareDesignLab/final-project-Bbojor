@@ -24,7 +24,7 @@ const routes = [
       if (store.getters.isAdmin) {
         next();
       } else {
-        next({ name: "Items" });
+        next({ name: "Home" });
       }
     },
   },

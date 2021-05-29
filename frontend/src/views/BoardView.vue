@@ -3,7 +3,15 @@
     <v-card-title>
       {{ this.board.name }}
       <v-spacer></v-spacer>
-      <v-btn @click="createThread">Add Thread</v-btn>
+      <v-btn @click="createThread">Create Thread</v-btn>
+
+      <v-text-field
+        label="Search"
+        single-line
+        v-model="searchedName"
+        hide-details
+      ></v-text-field>
+      <v-btn @click="searchThreads" icon> <v-icon>mdi-magnify </v-icon></v-btn>
     </v-card-title>
     <ThreadCard
       v-for="thread in threads"
@@ -32,6 +40,7 @@ export default {
   components: { ThreadDialog, ThreadCard },
   data() {
     return {
+      searchedName: null,
       board: {},
       threads: [],
       search: "",
@@ -46,11 +55,18 @@ export default {
       this.dialogVisible = false;
       this.selectedThread = {};
       this.$forceUpdate();
-      this.threads = await api.threads.allThreadsFiltered("boardId=" + this.board.id);
+      this.threads = await api.threads.allThreadsFiltered(
+        "boardId=" + this.board.id
+      );
     },
     closeDialog() {
       this.dialogVisible = false;
       this.refreshList();
+    },
+    async searchThreads() {
+      this.threads = await api.threads.allThreadsFiltered(
+        "boardId=" + this.board.id + "&title=" + this.searchedName
+      );
     },
   },
   computed: {
@@ -60,7 +76,9 @@ export default {
   },
   async created() {
     this.board = this.$route.params.board;
-    this.threads = await api.threads.allThreadsFiltered("boardId=" + this.board.id);
+    this.threads = await api.threads.allThreadsFiltered(
+      "boardId=" + this.board.id
+    );
   },
 };
 </script>

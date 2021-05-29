@@ -27,7 +27,7 @@ public class ForumThreadController {
 
     // apparently setting the content type to undefined in the frontend and setting it back to form-data here is what I was missing the first time I tried... pain
     @PostMapping(consumes = {"multipart/form-data"})
-    public ForumThreadDTO create( @RequestPart("thread") ForumThreadDTO forumThreadDTO, @RequestPart(value = "files", required = false) MultipartFile[] files) throws IOException {
+    public ForumThreadDTO create(@Valid @RequestPart("thread") ForumThreadDTO forumThreadDTO, @RequestPart(value = "files", required = false) MultipartFile[] files) throws IOException {
         return forumThreadService.create(forumThreadDTO, files);
     }
 

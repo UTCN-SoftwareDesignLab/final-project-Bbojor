@@ -1,7 +1,7 @@
-package com.example.demo.message;
+package com.example.demo.chat;
 
-import com.example.demo.message.dto.ChatFilterRequestDTO;
-import com.example.demo.message.model.ChatMessage;
+import com.example.demo.chat.dto.ChatFilterRequestDTO;
+import com.example.demo.chat.model.ChatMessage;
 import org.springframework.data.jpa.domain.Specification;
 
 public class ChatSpecifications {

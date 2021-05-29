@@ -94,9 +94,14 @@ export default {
         });
     },
     async attemptRegister() {
-      await this.$store.dispatch("auth/register", this.login).catch((error) => {
-        alert(error.response.data);
-      });
+      await this.$store
+        .dispatch("auth/register", this.login)
+        .then(() => {
+          this.mode = "login";
+        })
+        .catch((error) => {
+          alert(JSON.stringify(error.response.data));
+        });
     },
     toggleMode() {
       this.mode = this.mode === "login" ? "register" : "login";

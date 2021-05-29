@@ -43,6 +43,7 @@ export const auth = {
         id: user.id,
         username: user.username,
         email: user.email,
+        roles: user.roles,
         avatarId: user.avatarId,
       });
       commit("editUser", { email: user.email, avatar: user.avatarFile });
@@ -78,6 +79,9 @@ export const auth = {
     },
     isMod: (state) => {
       return state.user.roles.includes("MODERATOR");
+    },
+    roles: (state) => {
+      return state.user.roles;
     },
     userId: (state) => {
       return state.user.id;

@@ -1,4 +1,4 @@
-package com.example.demo.message.model;
+package com.example.demo.chat.model;
 
 import com.example.demo.user.model.User;
 import lombok.*;
@@ -18,11 +18,11 @@ public class ChatMessage {
     private Long id;
 
     @JoinColumn(name = "sender_id", updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User sender;
 
     @JoinColumn(name = "recipient_id", updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User recipient;
 
     @Column

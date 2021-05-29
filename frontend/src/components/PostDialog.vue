@@ -13,6 +13,7 @@
           <input
             type="file"
             multiple="multiple"
+            id="fileInput"
             accept="image/*"
             @change="onFilesPicked"
           />
@@ -61,13 +62,13 @@ export default {
           }
         )
       );
-
       api.posts
         .create(this.formData)
         .then(() => {
           this.$emit("refresh");
         })
         .catch((error) => {
+          this.formData.delete("post");
           alert(JSON.stringify(error.response.data));
         });
     },

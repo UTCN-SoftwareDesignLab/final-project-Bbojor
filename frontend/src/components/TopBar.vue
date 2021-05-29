@@ -2,6 +2,7 @@
   <v-card class="ma-1" color="grey lighten-4" flat tile>
     <v-toolbar height="200">
       <v-btn @click="toHome">Home</v-btn>
+      <v-btn v-if="isAdmin" @click="toUsers">Users</v-btn>
       <v-spacer></v-spacer>
       <UserCard></UserCard>
     </v-toolbar>
@@ -20,6 +21,9 @@ export default {
   methods: {
     toHome() {
       router.push("/home");
+    },
+    toUsers() {
+      router.push("/users");
     },
   },
   computed: {

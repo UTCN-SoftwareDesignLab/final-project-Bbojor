@@ -5,12 +5,17 @@
         <TopBar v-if="isLoggedIn"></TopBar>
         <v-container fluid>
           <router-view class="float-left"></router-view>
-          <ChatWindow v-if="isLoggedIn" :visible="showChatWindow"  class="float-right"></ChatWindow>
+          <ChatWindow
+            fixed
+            v-if="isLoggedIn"
+            :visible="showChatWindow"
+            @showChat="showChat"
+          ></ChatWindow>
           <v-btn
             v-if="isLoggedIn"
             fixed
             class="v-btn--bottom v-btn--right"
-            @click="showChat"
+            @click="toggleChat"
             >Chat</v-btn
           >
         </v-container>
@@ -29,9 +34,11 @@ export default {
     showChatWindow: false,
   }),
   methods: {
-    showChat() {
-      console.log("here");
+    toggleChat() {
       this.showChatWindow = !this.showChatWindow;
+    },
+    showChat() {
+      this.showChatWindow = true;
     },
   },
   computed: {

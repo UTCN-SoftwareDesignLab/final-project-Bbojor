@@ -68,9 +68,11 @@ export default {
       api.threads
         .create(this.formData)
         .then(() => {
+          this.close();
           this.$emit("refresh");
         })
         .catch((error) => {
+          this.formData.delete("thread");
           alert(JSON.stringify(error.response.data));
         });
     },

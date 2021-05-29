@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="visible" width="600">
+  <v-card v-if="visible" width="600" class="sticky-card" style="position: fixed; right: 20px; top: 350px">
     <v-col>
       <v-container v-if="currentChatPartner === null">
         <v-text-field
@@ -112,6 +112,7 @@ export default {
       )
         if (confirm(message.message)) {
           this.loadChat(message.senderId);
+          this.$emit('showChat');
           api.chat.subscribe(
             "/user/" + this.userId + "/" + message.senderId,
             this.addMessage

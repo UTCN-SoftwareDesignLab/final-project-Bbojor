@@ -1,8 +1,8 @@
-package com.example.demo.message;
+package com.example.demo.chat;
 
 
-import com.example.demo.message.dto.ChatFilterRequestDTO;
-import com.example.demo.message.dto.ChatMessageDTO;
+import com.example.demo.chat.dto.ChatFilterRequestDTO;
+import com.example.demo.chat.dto.ChatMessageDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;

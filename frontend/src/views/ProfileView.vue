@@ -39,6 +39,8 @@ export default {
           id: this.userId,
           username: this.username,
           email: this.user.email,
+          avatarId: this.user.avatarId,
+          roles: this.user.roles,
         })
         .then(() => {
           this.$store.commit("auth/editedUserEmail", this.user.email);
@@ -86,6 +88,7 @@ export default {
             email: this.email,
             avatarId: response.id,
             avatarFile: response.fileName,
+            roles: this.roles,
           });
         })
         .catch((error) => {
@@ -102,6 +105,9 @@ export default {
     },
     email() {
       return this.$store.getters["auth/email"];
+    },
+    roles() {
+      return this.$store.getters["auth/roles"];
     },
   },
 };

@@ -11,13 +11,13 @@
           {{ isNew ? "Create user" : "Edit user" }}
         </v-toolbar>
         <v-form>
-          <v-text-field v-model="user.username" label="Username" />
-          <v-text-field v-model="user.email" label="Email" />
-          <v-text-field v-model="user.password" label="Password" />
+          <v-text-field v-if="isNew" v-model="user.username" label="Username" />
+          <v-text-field v-if="isNew" v-model="user.email" label="Email" />
+          <v-text-field v-if="isNew" v-model="user.password" label="Password" />
           <v-radio-group v-model="user.roles">
             <v-radio label="Admin" value="ADMIN" />
-            <v-radio label="Secretary" value="SECRETARY" />
-            <v-radio label="Doctor" value="DOCTOR" />
+            <v-radio label="Moderator" value="MODERATOR" />
+            <v-radio label="User" value="USER" />
           </v-radio-group>
         </v-form>
         <v-card-actions>
@@ -63,6 +63,7 @@ export default {
             username: this.user.username,
             email: this.user.email,
             roles: [this.user.roles],
+            avatarId: this.user.avatarId,
           })
           .then(() => this.$emit("refresh"))
           .catch((error) => {

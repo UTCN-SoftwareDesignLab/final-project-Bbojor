@@ -39,7 +39,7 @@ public class ForumThread {
     private String text;
 
     @Column
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "thread", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "thread", cascade = CascadeType.ALL)
     @Builder.Default
     private Set<Media> media = new HashSet<>();
 }

@@ -1,7 +1,7 @@
-package com.example.demo.message.mapper;
+package com.example.demo.chat.mapper;
 
-import com.example.demo.message.dto.ChatMessageDTO;
-import com.example.demo.message.model.ChatMessage;
+import com.example.demo.chat.dto.ChatMessageDTO;
+import com.example.demo.chat.model.ChatMessage;
 import com.example.demo.user.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

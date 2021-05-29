@@ -31,7 +31,7 @@ public class PostController {
     }
 
     @PostMapping(consumes = {"multipart/form-data"})
-    public PostDTO create(@RequestPart("post") PostDTO postDTO, @RequestPart(value = "files", required = false) MultipartFile[] files) throws IOException {
+    public PostDTO create(@Valid @RequestPart("post") PostDTO postDTO, @RequestPart(value = "files", required = false) MultipartFile[] files) throws IOException {
         return postService.create(postDTO, files);
     }
 

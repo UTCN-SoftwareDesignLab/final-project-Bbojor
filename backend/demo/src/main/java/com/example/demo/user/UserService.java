@@ -63,6 +63,7 @@ public class UserService {
         }
 
         if(user.getAvatarId() == null) {
+            System.out.println("bad");
             Media defaultAvatar = mediaRepository.findByFileName(DEFAULT_AVATAR);
             user.setAvatarId(defaultAvatar.getId());
         }
